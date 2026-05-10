@@ -16,13 +16,22 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     translate_c.linkSystemLibrary("sdl3", .{});
+    const c_dep_mod = translate_c.createModule();
+
+    const window_mod = b.createModule(.{
+        .root_source_file = b.path("src/Window.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    window_mod.addImport("c", c_dep_mod);
 
     const root_mod = b.addModule("sme", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
     });
-    root_mod.addImport("c", translate_c.createModule());
+    root_mod.addImport("c", c_dep_mod);
+    root_mod.addImport("Window", window_mod);
 
     const examples = [_]Example{
         .{
