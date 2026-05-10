@@ -10,11 +10,19 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    const translate_c = b.addTranslateC(.{
+        .root_source_file = b.path("c-dep/dep.c"),
+        .target = target,
+        .optimize = optimize,
+    });
+    translate_c.linkSystemLibrary("sdl3", .{});
+
     const root_mod = b.addModule("sme", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
     });
+    root_mod.addImport("c", translate_c.createModule());
 
     const examples = [_]Example{
         .{
