@@ -25,7 +25,7 @@ pub fn build(b: *std.Build) void {
     });
     window_mod.addImport("c", c_dep_mod);
 
-    const root_mod = b.addModule("sme", .{
+    const root_mod = b.addModule("svgu", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
@@ -35,7 +35,7 @@ pub fn build(b: *std.Build) void {
 
     const examples = [_]Example{
         .{
-            .name = "hello_world",
+            .name = "hello-world",
             .path = "examples/hello_world.zig",
             .desc = "A basic Hello, world! program",
         },
@@ -48,7 +48,7 @@ pub fn build(b: *std.Build) void {
             .target = target,
             .optimize = optimize,
         });
-        mod.addImport("sme", root_mod);
+        mod.addImport("svgu", root_mod);
 
         const exe = b.addExecutable(.{ .name = it.name, .root_module = mod });
         examples_step.dependOn(&b.addInstallArtifact(exe, .{}).step);

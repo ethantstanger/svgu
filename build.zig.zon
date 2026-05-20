@@ -1,5 +1,5 @@
 .{
-    .name = .sme,
+    .name = .svgu,
     .version = "0.0.1",
     .minimum_zig_version = "0.16.0",
     .paths = .{
@@ -7,5 +7,5 @@
         "build.zig.zon",
         "src",
     },
-    .fingerprint = 0x447d8f260d72a9bd,
+    .fingerprint = 0x261bc5fd8dd19e5,
 }
